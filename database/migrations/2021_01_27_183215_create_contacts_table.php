@@ -19,7 +19,7 @@ class CreateContactsTable extends Migration
             $table->string('email');
             $table->string('mobile')->nullable();
             $table->string('subject');
-            $table->longText('massage');
+            $table->longText('message');
             $table->unsignedTinyInteger('status')->default(0);
             $table->timestamps();
         });

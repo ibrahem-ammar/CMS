@@ -16,9 +16,9 @@
             <div class="content">
                 <h4><a href="{{ route('posts.show', $post->slug) }}">{{$post->title}}</a></h4>
                 <ul class="post__meta">
-                    <li>Posts by : <a href="#">{{$post->user->name}}</a></li>
+                    <li>Posts by : <a href="{{ route('posts.author',$post->user->username) }}">{{$post->user->name}}</a></li>
                     <li class="post_separator">/</li>
-                    <li>{{$post->created_at->format('M d Y')}}</li>
+                    <li><a href="{{ route('posts.archive',$post->created_at->format('d-m-Y')) }}">{{$post->created_at->format('M d Y')}}</a></li>
                 </ul>
                 <p>
                     {!! \Illuminate\Support\Str::limit($post->content,145,'...') !!}
@@ -29,7 +29,7 @@
             </div>
         </article>
         @empty
-            <h2 class="text-center">no posts yet</h2>
+            <h2 class="text-capitalize">no posts found</h2>
         @endforelse
 
     </div>

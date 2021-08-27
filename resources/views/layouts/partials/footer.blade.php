@@ -6,7 +6,7 @@
                 <div class="col-lg-12">
                     <div class="footer__widget footer__menu">
                         <div class="ft__logo">
-                            <a href="index.html">
+                            <a href="{{ route('posts.index') }}">
                                 <img src="{{asset('assets/images/logo/3.png')}}" alt="logo">
                             </a>
                             <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered duskam alteration variations of passages</p>
@@ -20,12 +20,11 @@
                                 <li><a href="#"><i class="bi bi-youtube"></i></a></li>
                             </ul>
                             <ul class="mainmenu d-flex justify-content-center">
-                                <li><a href="index.html">Trending</a></li>
-                                <li><a href="index.html">Best Seller</a></li>
-                                <li><a href="index.html">All Product</a></li>
-                                <li><a href="index.html">Wishlist</a></li>
-                                <li><a href="index.html">Blog</a></li>
-                                <li><a href="index.html">Contact</a></li>
+                                <li><a href="{{ route('posts.index') }}">Home</a></li>
+                                <li><a href="{{ route('page','about-us') }}">about us</a></li>
+                                <li><a href="{{ route('page','our-vision') }}">our vision</a></li>
+                                <li><a href="{{ route('posts.index') }}">Blog</a></li>
+                                <li><a href="{{ route('contact') }}">Contact</a></li>
                             </ul>
                         </div>
                     </div>

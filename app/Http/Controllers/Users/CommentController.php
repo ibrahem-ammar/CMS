@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class CommentController extends Controller
 {
-    public function store($slug,Request $request)
+    public function store(Request $request,$slug)
     {
 
         // dd($slug);
@@ -43,13 +43,13 @@ class CommentController extends Controller
             $post->comments()->create($data);
 
             return redirect()->back()->with([
-                'massage'=>'comment added successfully',
+                'message'=>'comment added successfully',
                 'type' => 'success'
                 ]);
         }
 
         return redirect()->route('posts.index')->with([
-            'massage'=>'some thing went wrong',
+            'message'=>'some thing went wrong',
             'type' => 'danger'
             ]);
     }

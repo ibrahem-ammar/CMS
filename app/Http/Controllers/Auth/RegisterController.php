@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -54,10 +55,12 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255','unique:users'],
-            'mobile' => ['required', 'numeric', 'max:255','unique:users'],
+            'mobile' => ['required', 'numeric','unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'max:255', 'confirmed'],
             'image' => ['nullable', 'image', 'max:20000', 'mimes:jpeg,jpg,png'],
+            'bio' => ['nullable', 'string', 'max:1000'],
+            'receive_email' => ['nullable'],
         ]);
     }
 
@@ -74,12 +77,14 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'mobile' => $data['mobile'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password'])
+            'password' => Hash::make($data['password']),
+            'bio' => $data['bio'],
+            'receive_email' => isset($data['receive_email']) ? $data['receive_email'] : 0,
         ]);
 
         if (isset($data['image'])) {
             if ($image = $data['image']) {
-                $filename = Str::slug($data['username']) . $image->getClientOriginalExtension();
+                $filename = Str::slug($data['username']) . '.' .$image->getClientOriginalExtension();
                 $path = public_path('/assets/users/' . $filename);
                 Image::make($image->getRealPath())->resize(300,300,function($constraint)
                 {
@@ -89,5 +94,22 @@ class RegisterController extends Controller
                 $user->update(['image' =>$filename]);
             }
         }
+
+        return $user;
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
+    {
+        return redirect()->route('index')->with([
+            'message' => 'your account registerd successfully, please check your email to activate your account',
+            'type' => 'success'
+        ]) ;
     }
 }

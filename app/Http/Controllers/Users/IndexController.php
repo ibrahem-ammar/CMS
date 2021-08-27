@@ -18,12 +18,14 @@ class IndexController extends Controller
 
     public function docontact(Request $request)
     {
+
+        // dd($request);
         $validation = Validator::make($request->all(),[
             'name' => 'required',
             'email' => 'required|email',
             'mobile' => 'required|numeric',
             'subject' => 'required',
-            'massage' => 'required|min:10',
+            'message' => 'required|min:10',
         ]);
 
         if ($validation->fails()) {
@@ -33,8 +35,8 @@ class IndexController extends Controller
         Contact::create($request->all());
 
         return redirect()->back()->with([
-            'massage' => 'email send successfully',
-            'type' => 'danger'
+            'message' => 'email sent successfully',
+            'type' => 'success'
         ]);
     }
 
@@ -48,7 +50,7 @@ class IndexController extends Controller
             return view('site.page',compact('page'));
         }else{
             return redirect()->route('posts.index')->with([
-                'massage' => 'something wrong happend',
+                'message' => 'something wrong happend',
                 'type' => 'danger'
             ]);
         }

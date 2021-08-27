@@ -1,61 +1,10 @@
-{{-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-    <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'Laravel') }}
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left Side Of Navbar -->
-            <ul class="navbar-nav mr-auto">
-
-            </ul>
-
-            <!-- Right Side Of Navbar -->
-            <ul class="navbar-nav ml-auto">
-                <!-- Authentication Links -->
-                @guest
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                    </li>
-                    @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        </li>
-                    @endif
-                @else
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }}
-                        </a>
-
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
-                @endguest
-            </ul>
-        </div>
-    </div>
-</nav> --}}
-
 <!-- Header -->
 <header id="wn__header" class="oth-page header__area header__absolute sticky__header">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4 col-sm-4 col-7 col-lg-2">
                 <div class="logo">
-                    <a href="index.html">
+                    <a href="{{ route('posts.index') }}">
                         <img src="{{ asset('assets/images/logo/logo.png') }}" alt="logo images">
                     </a>
                 </div>
@@ -69,7 +18,7 @@
                         <li class="drop"><a href="javascript:void(0)">Blog</a>
                             <div class="megamenu dropdown">
                                 <ul class="item item01">
-                                    @forelse ($categories as $category)
+                                    @forelse ($global_categories as $category)
                                     <li><a href="{{ route('posts.category', $category->slug) }}">{{ $category->name }}</a></li>
                                     @empty
                                     <li><a href="javascript:void(0)">no categories found</a></li>
@@ -84,7 +33,7 @@
             <div class="col-md-8 col-sm-8 col-5 col-lg-2">
                 <ul class="header__sidebar__right d-flex justify-content-end align-items-center">
                     <li class="shop_search"><a class="search__active" href="#"></a></li>
-                    <li class="wishlist"><a href="#"></a></li>
+                    {{-- <li class="wishlist"><a href="#"></a></li> --}}
                     <li class="shopcart"><a class="cartbox_active" href="#"><span class="product_qun">3</span></a>
                         <!-- Start Shopping Cart -->
                         <div class="block-minicart minicart__active">
@@ -92,40 +41,17 @@
                                 <div class="micart__close">
                                     <span>close</span>
                                 </div>
-                                <div class="items-total d-flex justify-content-between">
-                                    <span>3 items</span>
-                                    <span>Cart Subtotal</span>
-                                </div>
-                                <div class="total_amount text-right">
-                                    <span>$66.00</span>
-                                </div>
-                                <div class="mini_action checkout">
-                                    <a class="checkout__btn" href="cart.html">Go to Checkout</a>
-                                </div>
                                 <div class="single__items">
                                     <div class="miniproduct">
                                         <div class="item01 d-flex">
                                             <div class="thumb">
-                                                <a href="product-details.html"><img src="images/product/sm-img/1.jpg" alt="product images"></a>
+                                                <a href="product-details.html"><img src="{{ asset('assets/images/blog/sm-img/1.jpg') }} " alt="product images"></a>
                                             </div>
                                             <div class="content">
-                                                <h6><a href="product-details.html">Voyage Yoga Bag</a></h6>
-                                                <span class="prize">$30.00</span>
-                                                <div class="product_prize d-flex justify-content-between">
-                                                    <span class="qun">Qty: 01</span>
-                                                    <ul class="d-flex justify-content-end">
-                                                        <li><a href="#"><i class="zmdi zmdi-settings"></i></a></li>
-                                                        <li><a href="#"><i class="zmdi zmdi-delete"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item01 d-flex mt--20">
-                                            <div class="thumb">
-                                                <a href="product-details.html"><img src="images/product/sm-img/3.jpg" alt="product images"></a>
-                                            </div>
-                                            <div class="content">
-                                                <h6><a href="product-details.html">Impulse Duffle</a></h6>
+
+                                                <a>you have new comment on your post : post title</a>
+
+                                                {{-- <h6><a href="product-details.html">Compete Track Tote</a></h6>
                                                 <span class="prize">$40.00</span>
                                                 <div class="product_prize d-flex justify-content-between">
                                                     <span class="qun">Qty: 03</span>
@@ -133,83 +59,19 @@
                                                         <li><a href="#"><i class="zmdi zmdi-settings"></i></a></li>
                                                         <li><a href="#"><i class="zmdi zmdi-delete"></i></a></li>
                                                     </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item01 d-flex mt--20">
-                                            <div class="thumb">
-                                                <a href="product-details.html"><img src="images/product/sm-img/2.jpg" alt="product images"></a>
-                                            </div>
-                                            <div class="content">
-                                                <h6><a href="product-details.html">Compete Track Tote</a></h6>
-                                                <span class="prize">$40.00</span>
-                                                <div class="product_prize d-flex justify-content-between">
-                                                    <span class="qun">Qty: 03</span>
-                                                    <ul class="d-flex justify-content-end">
-                                                        <li><a href="#"><i class="zmdi zmdi-settings"></i></a></li>
-                                                        <li><a href="#"><i class="zmdi zmdi-delete"></i></a></li>
-                                                    </ul>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="mini_action cart">
-                                    <a class="cart__btn" href="cart.html">View and edit cart</a>
                                 </div>
                             </div>
                         </div>
                         <!-- End Shopping Cart -->
                     </li>
+
                     <li class="setting__bar__icon"><a class="setting__active" href="#"></a>
                         <div class="searchbar__content setting__block">
                             <div class="content-inner">
-                                <div class="switcher-currency">
-                                    <strong class="label switcher-label">
-                                        <span>Currency</span>
-                                    </strong>
-                                    <div class="switcher-options">
-                                        <div class="switcher-currency-trigger">
-                                            <span class="currency-trigger">USD - US Dollar</span>
-                                            <ul class="switcher-dropdown">
-                                                <li>GBP - British Pound Sterling</li>
-                                                <li>EUR - Euro</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="switcher-currency">
-                                    <strong class="label switcher-label">
-                                        <span>Language</span>
-                                    </strong>
-                                    <div class="switcher-options">
-                                        <div class="switcher-currency-trigger">
-                                            <span class="currency-trigger">English01</span>
-                                            <ul class="switcher-dropdown">
-                                                <li>English02</li>
-                                                <li>English03</li>
-                                                <li>English04</li>
-                                                <li>English05</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="switcher-currency">
-                                    <strong class="label switcher-label">
-                                        <span>Select Store</span>
-                                    </strong>
-                                    <div class="switcher-options">
-                                        <div class="switcher-currency-trigger">
-                                            <span class="currency-trigger">Fashion Store</span>
-                                            <ul class="switcher-dropdown">
-                                                <li>Furniture</li>
-                                                <li>Shoes</li>
-                                                <li>Speaker Store</li>
-                                                <li>Furniture</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="switcher-currency">
                                     <strong class="label switcher-label">
                                         <span>My Account</span>
@@ -217,11 +79,20 @@
                                     <div class="switcher-options">
                                         <div class="switcher-currency-trigger">
                                             <div class="setting__menu">
-                                                <span><a href="#">Compare Product</a></span>
-                                                <span><a href="#">My Account</a></span>
-                                                <span><a href="#">My Wishlist</a></span>
-                                                <span><a href="#">Sign In</a></span>
-                                                <span><a href="#">Create An Account</a></span>
+                                                @auth
+                                                    <span><a href="#">My Account</a></span>
+                                                    <span><a href="{{ route('logout') }}"
+                                                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                                            Logout
+                                                        </a>
+                                                    </span>
+                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                        @csrf
+                                                    </form>
+                                                @else
+                                                    <span><a href="{{ route('login') }}">Login </a></span>
+                                                    <span><a href="{{ route('register') }}">Register</a></span>
+                                                @endauth
                                             </div>
                                         </div>
                                     </div>
@@ -243,7 +114,7 @@
                         <li><a href="javascript:void(0)">Blog</a>
                             <div class="megamenu dropdown">
                                 <ul class="item item01">
-                                    @forelse ($categories as $category)
+                                    @forelse ($global_categories as $category)
                                     <li><a href="{{ route('posts.category', $category->slug) }}">{{ $category->name }}</a></li>
                                     @empty
                                     <li><a href="javascript:void(0)">no categories found</a></li>
@@ -265,11 +136,11 @@
 <!-- //Header -->
 <!-- Start Search Popup -->
 <div class="box-search-content search_active block-bg close__top">
-    <form id="search_mini_form" class="minisearch" action="#">
+    <form id="search_mini_form" class="minisearch" action="{{ route('posts.search') }}" method="get">
         <div class="field__search">
-            <input type="text" placeholder="Search entire store here...">
+            <input type="text" placeholder="Search entire blog here..." name="search" value="{{ old('search',request()->search) }}">
             <div class="action">
-                <a href="#"><i class="zmdi zmdi-search"></i></a>
+                <a href="javascript:void(0)"><i class="zmdi zmdi-search"></i></a>
             </div>
         </div>
     </form>
@@ -286,9 +157,9 @@
                 <div class="bradcaump__inner text-center">
                     <h2 class="bradcaump-title">Blog Page</h2>
                     <nav class="bradcaump-content">
-                      <a class="breadcrumb_item" href="index.html">Home</a>
-                      <span class="brd-separetor">/</span>
-                      <span class="breadcrumb_item active">Blog</span>
+                    <a class="breadcrumb_item" href="{{ route('posts.index') }}">Home</a>
+                    <span class="brd-separetor">/</span>
+                    <span class="breadcrumb_item active">Blog</span>
                     </nav>
                 </div>
             </div>

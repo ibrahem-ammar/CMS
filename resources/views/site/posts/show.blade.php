@@ -6,7 +6,31 @@
         <article class="blog-post-details">
             @if ($post->media->count() > 0)
             <div class="post-thumbnail">
-                <img src=" {{ asset('assets/posts/'.$post->media->first()->path) }} " alt="{{ $post->title }}">
+                <div id="postImagesIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        @foreach ($post->media as $item)
+                            <li data-target="#postImagesIndicators" data-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}"></li>
+                        @endforeach
+                    </ol>
+                    <div class="carousel-inner">
+                        @foreach ($post->media as $item)
+                            <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                                <img src="{{ asset('assets/posts/images/'. $media->path) }}" class="d-block w-100" alt="{{ $post->title }}">
+                            </div>
+                        @endforeach
+                    </div>
+
+                    @if ($post->media->count() > 1)
+                        <a class="carousel-control-prev" href="#postImagesIndicators" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#postImagesIndicators" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    @endif
+                </div>
             </div>
             @endif
 
@@ -16,7 +40,7 @@
                     <div class="blog-date-categori">
                         <ul>
                             <li>{{$post->created_at->format('M d, Y ')}}</li>
-                            <li><a href="#" title="Posts by boighor" rel="author">{{$post->user->name}}</a></li>
+                            <li><a href="{{ route('posts.author',$post->user->username) }}" title="Posts by boighor" rel="author">{{$post->user->name}}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -26,29 +50,33 @@
                     </p>
                 </div>
                 <ul class="blog_meta">
-                    <li><a href="#">{{$post->comments->count()}} comment(s)</a></li>
+                    <li><a href="#">{{$post->active_comments->count()}} comment(s)</a></li>
                     <li> / </li>
-                    <li>Tags:<span>{{$post->category->name}}</span></li>
+                    <li>Category : <span>{{$post->category->name}}</span></li>
                 </ul>
             </div>
         </article>
-        <div class="comments_area">
-            <h3 class="comment__title">{{$post->comments->count()}} comment(s)</h3>
+        @include('site.posts.includes.add_comment')
+
+        <div class="comments_area mt-4">
+            <h3 class="comment__title">{{$post->active_comments->count()}} comment(s)</h3>
             <ul class="comment__list">
 
-                @forelse ($post->comments as $comment)
+                @forelse ($post->active_comments as $comment)
                 <li>
                     <div class="wn__comment">
                         <div class="thumb">
-                            @if ($post->user->image)
-                            <img src=" {{ asset('assets/users/'.$post->user->image) }}" alt="comment images">
-                            @else
-                            <img src=" {{ asset('assets/users/1.jpeg') }}" alt="comment images">
-                            @endif
+                            <img src=" {{ get_gravatar($comment->email,46) }}" alt="User Avatar">
                         </div>
                         <div class="content">
                             <div class="comnt__author d-block d-sm-flex">
-                                <span><a href="#">{{ $comment->name }}</a> Post author</span>
+                                <span>
+                                    @if ($comment->url)
+                                    <a href="{{ $comment->url }}">{{ $comment->name }}</a>
+                                    @else
+                                    {{ $comment->name }}
+                                    @endif
+                                </span>
                                 <span>{{ $comment->created_at->format('M d, Y h:i a') }}</span>
                                 <div class="reply__btn">
                                     <a href="#">Reply</a>
@@ -59,39 +87,13 @@
                     </div>
                 </li>
                 @empty
-                    <h3 class="text-center"> no comments yet</h3>
+                    <p class="text-center"> no comments yet</p>
                 @endforelse
             </ul>
         </div>
-        <div class="comment_respond">
-            <h3 class="reply_title">Leave a Reply <small><a href="#">Cancel reply</a></small></h3>
 
-            <form class="comment__form" action="{{ route('comment.store',['slug'=>$post->slug]) }}" method="POST">
-                @csrf
-                <p>Your email address will not be published.Required fields are marked </p>
-                <div class="input__box">
-                    <textarea name="comment" placeholder="Your comment here">{{ old('comment')}}</textarea>
-                    @error('comment') <span class="help-block text-danger">{{ $message }}</span>@enderror
-                </div>
-                <div class="input__wrapper clearfix">
-                    <div class="input__box name one--third">
-                        <input type="text" placeholder="name" value="{{ old('name')}}" name="name">
-                        @error('name') <span class="help-block text-danger">{{ $message }}</span>@enderror
-                </div>
-                    <div class="input__box email one--third">
-                        <input type="email" placeholder="email" value="{{ old('email')}}" name="email">
-                        @error('email') <span class="help-block text-danger">{{ $message }}</span>@enderror
-                </div>
-                    <div class="input__box website one--third">
-                        <input type="text" placeholder="website" value="{{ old('url')}}" name="url" >
-                        @error('url') <span class="help-block text-danger">{{ $message }}</span>@enderror
-                </div>
-                </div>
-                <div class="submite__btn">
-                    <button type="submit">Post Comment</button>
-                </div>
-            </form>
-        </div>
+
+        {{-- @include('site.posts.includes.add_comment') --}}
     </div>
 </div>
 @include('layouts.partials.sidemenu')

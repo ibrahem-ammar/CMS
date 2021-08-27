@@ -13,17 +13,11 @@
 
     <!-- Favicons -->
 	<link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }} ">
-	<link rel="apple-touch-icon" href="{{ asset('assets/images/icon.png') }} ">
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <!-- Google font (font-family: 'Roboto', sans-serif; Poppins ; Satisfy) -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,600,600i,700,700i,800" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-    <!-- Styles -->
+    <link rel="apple-touch-icon" href="{{ asset('assets/images/icon.png') }} ">
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-	<link rel="stylesheet" href=" {{ asset('assets/css/plugins.css') }} ">
+
+    <link rel="stylesheet" href=" {{ asset('assets/css/plugins.css') }} ">
     <link rel="stylesheet" href=" {{ asset('assets/style.css') }} ">
     <!-- Cusom css -->
     <link rel="stylesheet" href=" {{ asset('assets/css/custom.css') }} ">
@@ -37,14 +31,14 @@
         <div class="wrapper" id="wrapper">
             @include('layouts.partials.navbar')
             <main>
-            @include('layouts.partials.flash')
-            <div class="page-blog bg--white section-padding--lg blog-sidebar right-sidebar">
-                <div class="container">
-                    <div class="row">
-                        @yield('content')
+                <div class="page-blog bg--white section-padding--lg blog-sidebar right-sidebar">
+                    <div class="container">
+                        @include('layouts.partials.flash')
+                        <div class="row">
+                            @yield('content')
+                        </div>
                     </div>
                 </div>
-            </div>
             </main>
             @include('layouts.partials.footer')
         </div>
@@ -57,8 +51,8 @@
     <script src="{{ asset('assets/js/active.js') }} "></script>
     <script>
         $(function(){
-            $('#alert_massage').fadeTo(5000,500).slideUp(500,function(){
-                $('#alert_massage').slideUp(500);
+            $('#alert_message').fadeTo(5000,500).slideUp(500,function(){
+                $('#alert_message').slideUp(500);
             });
         });
     </script>

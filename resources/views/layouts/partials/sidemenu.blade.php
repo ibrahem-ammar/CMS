@@ -53,10 +53,10 @@
                 <li>
                     <div class="post-wrapper">
                         <div class="thumb">
-                            <img src=" {{ asset('assets/images/blog/comment/1.jpeg') }}"  alt="Comment images">
+                            <img src=" {{ get_gravatar($recent_comment->email,47) }}"  alt="{{ $recent_comment->name }}">
                         </div>
                         <div class="content">
-                            <p>{{ $recent_comment->name }}</p>
+                            <p>{{ $recent_comment->name }} says :</p>
                             <a href="{{ route('posts.show', $recent_comment->post->slug) }}">{!! \Illuminate\Support\Str::limit($recent_comment->comment,25,'...') !!}</a>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
         <aside class="widget category_widget">
             <h3 class="widget-title">Categories</h3>
             <ul>
-                @forelse ($categories as $category)
+                @forelse ($global_categories as $category)
                 <li><a href="{{ route('posts.category', $category->slug) }}">{{$category->name}}</a></li>
                 @empty
                 <li>no categories</li>
@@ -90,11 +90,12 @@
         <aside class="widget archives_widget">
             <h3 class="widget-title">Archives</h3>
             <ul>
-                <li><a href="#">March 2015</a></li>
-                <li><a href="#">December 2014</a></li>
-                <li><a href="#">November 2014</a></li>
-                <li><a href="#">September 2014</a></li>
-                <li><a href="#">August 2014</a></li>
+
+                @forelse ($global_archives as $key => $value)
+                    <li><a href="{{ route('posts.archive', $key.'-'.$value) }}">{{ date("F", mktime(0,0,0,$key,1)) . ' ' . $value }}</a></li>
+                @empty
+                    <li><p>No Posts Found</p></li>
+                @endforelse
             </ul>
         </aside>
         <!-- End Single Widget -->

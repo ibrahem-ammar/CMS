@@ -13,10 +13,10 @@
             <div class="post_header">
                 <h2>{{$page->title}}</h2>
                 <div class="blog-date-categori">
-                    <ul>
+                    {{-- <ul>
                         <li>{{$page->created_at->format('M d, Y ')}}</li>
                         <li><a href="#" title="Posts by boighor" rel="author">{{$page->user->name}}</a></li>
-                    </ul>
+                    </ul> --}}
                 </div>
             </div>
             <div class="post_content">

@@ -9,11 +9,7 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $posts = Post::whereType('post')->whereStatus(1)->with('category','user','media')
@@ -23,6 +19,61 @@ class PostController extends Controller
             $q->whereStatus(1);
         })->orderBy('id','DESC')->paginate(5);
         return view('site.posts.index',compact('posts'));
+    }
+
+
+
+    public function create()
+    {
+        $categories = Category::all();
+
+        return view('site.posts.create',compact('categories'));
+    }
+
+    public function store(Request $request)
+    {
+        //
+    }
+
+    public function show($slug)
+    {
+        $post = Post::whereSlug($slug)->whereType('post')->whereStatus(1)
+            ->with([
+                'category',
+                'user',
+                'media',
+                'active_comments' => function($q) {
+                    $q->orderBy('id','desc');
+                }])
+            ->whereHas('category',function($q){
+                $q->whereStatus(1);
+            })->whereHas('user',function($q){
+                $q->whereStatus(1);
+            })->first();
+
+        // dd($post->active_comments);
+        if ($post) {
+            return view('site.posts.show',compact('post'));
+        } else {
+            abort(404);
+        }
+
+
+    }
+
+    public function edit($id)
+    {
+        //
+    }
+
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    public function destroy($id)
+    {
+        //
     }
 
     public function search(Request $request)
@@ -40,91 +91,53 @@ class PostController extends Controller
     public function category($slug)
     {
         $posts = Post::whereType('post')->whereStatus(1)
-        ->with('category','user','media')
         ->whereHas('category',function($q) use ($slug){
             $q->whereStatus(1)->whereSlug($slug);
-        })->whereHas('user',function($q){
-            $q->whereStatus(1);
-        })->paginate(5);
+        })
+        ->with('user','media')
+        ->orderBy('id','desc')->paginate(5);
 
         return view('site.posts.index',compact('posts'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function archive($date)
     {
-        $categories = Category::all();
+        $date = array_reverse(explode('-',$date)); ///  Year-Month-Day  ///
+        $year = $date[0];
+        $month = $date[1];
+        $day = isset($date[2])? $date[2] : null;
 
-        return view('site.posts.create',compact('categories'));
+
+        // dd($day,$month,$year);
+
+        $posts = Post::whereType('post')->whereStatus(1)
+        ->whereYear('created_at',$year)
+        ->whereMonth('created_at',$month);
+        if (isset($day)) {
+            $posts = $posts->whereDay('created_at',$day);
+        }
+        $posts = $posts->with('user','media')
+        ->orderBy('id','desc')->paginate(5);
+
+        return view('site.posts.index',compact('posts'));
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function author($username)
     {
-        //
+        $posts = Post::whereType('post')->whereStatus(1)
+            ->whereHas('user',function($q) use ($username){
+                $q->whereUsername($username);
+            })
+            ->with('user','media')
+            ->orderBy('id','desc')->paginate(5);
+
+        return view('site.posts.index',compact('posts'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($slug)
-    {
-        $post = Post::whereSlug($slug)->whereType('post')->whereStatus(1)
-        ->with('category','user','media','comments')
-        ->whereHas('category',function($q){
-            $q->whereStatus(1);
-        })->whereHas('user',function($q){
-            $q->whereStatus(1);
-        })->first();
 
-        // dd($post->category->name);
 
-        return view('site.posts.show',compact('post'));
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
+

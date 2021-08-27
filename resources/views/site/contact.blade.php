@@ -27,16 +27,13 @@
                             @error('subject') <span class="help-block text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="single-contact-form message">
-                            {!! Form::textarea('massage', old('massage'), ['placeholder'=>'Type your message here..']) !!}
-                            @error('massage') <span class="help-block text-danger">{{ $message }}</span> @enderror
+                            {!! Form::textarea('message', old('message'), ['placeholder'=>'Type your message here..']) !!}
+                            @error('message') <span class="help-block text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="contact-btn">
                             {!! Form::submit("Send Email") !!}
                         </div>
                     {!! Form::close() !!}
-                </div>
-                <div class="form-output">
-                    <p class="form-messege">
                 </div>
             </div>
         </div>

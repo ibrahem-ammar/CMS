@@ -1,8 +1,22 @@
-/*********************************************************************************
 
-	Template Name: Boighor Bookshop Responsive Bootstrap4 Template  
-	Description: Template description
-	Version: 1.0
-	Note: This is custom css. All custom styles (user styles) declare here.
 
-**********************************************************************************/
+.blog-details .comment_respond .comment__form .submite__btn button.cancel__btn {
+    background: #888 none repeat scroll 0 0 ;
+    color: #fff;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 12px 30px 8px;
+    text-shadow: none;
+    text-transform: uppercase;
+    transition: all 0.4s ease 0s;
+    border:none;
+    outline:0;
+}
+
+.blog-details .comment_respond .comment__form .submite__btn button.cancel__btn:hover {
+background: #444 none repeat scroll 0 0;
+color: #fff;
+border:none;
+outline:0;
+}
