@@ -80,7 +80,7 @@
                                         <div class="switcher-currency-trigger">
                                             <div class="setting__menu">
                                                 @auth
-                                                    <span><a href="#">My Account</a></span>
+                                                    <span><a href="{{ route('dashboard') }}">My Account</a></span>
                                                     <span><a href="{{ route('logout') }}"
                                                                 onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                                             Logout

@@ -89,10 +89,6 @@
                                 <input type="checkbox" name="receive_email" class="input-checkbox" id="receive_email" {{ old('receive_email') ? 'checked' : '' }}>
                                 <span>Receive Email</span>
                             </label>
-                            <label class="label-for-checkbox">
-                                <input type="checkbox" name="remember" class="input-checkbox" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                <span>Remember me</span>
-                            </label>
                         </div>
                         <a class="forget_pass" href="{{ route('login') }}">Login?</a>
                     </div>

@@ -16,10 +16,15 @@ Route::post('/email/resend', 'Auth\VerificationController@resend')->name('verifi
 // User Dashboard
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', 'Users\UserController@index')->name('dashboard');
+    Route::get('/dashboard/comments', 'Users\CommentController@index')->name('dashboard.comments');
+    Route::get('/dashboard/edit-information', 'Users\UserController@edit')->name('dashboard.edit_info');
+    Route::post('/dashboard/destroy_avatar', 'Users\UserController@destroy_avatar')->name('user.image.destroy');
+    Route::put('/dashboard/user/update_password', 'Users\UserController@update_password')->name('user.update.password');
+
 });
 
-// Comment Routes
-Route::post('comment/store/{slug}','Users\CommentController@store')->name('comment.store');
+// Comments Routes
+Route::resource('comments', 'Users\CommentController')->except(['show','create']);
 
 // Contact Routes
 Route::get('/contact','Users\IndexController@contact')->name('contact');
@@ -32,6 +37,7 @@ Route::get('/category/{slug}','Users\PostController@category')->name('posts.cate
 Route::get('/archive/{date}','Users\PostController@archive')->name('posts.archive');
 
 // Author Routes
+Route::resource('user','Users\UserController')->only(['index','edit','update']);
 Route::get('/author/{username}','Users\PostController@author')->name('posts.author');
 
 // Posts Routes
@@ -39,6 +45,9 @@ Route::get('/posts/search','Users\PostController@search')->name('posts.search');
 Route::get('/', 'Users\PostController@index')->name('index');
 Route::resource('posts', 'Users\PostController');
 
+// Delete Post Media
+Route::post('/posts/media/{media}/delete','Users\PostMediaController@destroy')->name('posts.media.destroy');
+
 // Static Pages Routes
-Route::get('/{slug}','Users\IndexController@page')->name('page');
+Route::get('/#/{slug}','Users\IndexController@page')->name('page');
 

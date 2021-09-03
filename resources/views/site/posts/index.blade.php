@@ -8,10 +8,17 @@
         <article class="blog__post d-flex flex-wrap">
             @if ($post->media->count() > 0)
             <div class="thumb">
-                <a href="blog-details.html">
+                <a href="{{ route('posts.show', $post->slug) }}">
                     <img src=" {{ asset('assets/posts/'.$post->media->first()->path) }} " alt="{{ $post->title }}">
                 </a>
             </div>
+            @else
+            <div class="thumb">
+                <a href="{{ route('posts.show', $post->slug) }}">
+                    <img src=" {{ asset('assets/images/blog/blog-3/2.jpg') }} " alt="{{ $post->title }}">
+                </a>
+            </div>
+
             @endif
             <div class="content">
                 <h4><a href="{{ route('posts.show', $post->slug) }}">{{$post->title}}</a></h4>
@@ -29,7 +36,7 @@
             </div>
         </article>
         @empty
-            <h2 class="text-capitalize">no posts found</h2>
+            <h2 class="text-capitalize">No Posts Found</h2>
         @endforelse
 
     </div>

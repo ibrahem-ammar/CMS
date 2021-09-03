@@ -59,7 +59,7 @@ class LoginController extends Controller
 
         if ($user->status == 1) {
 
-            return redirect()->route('index')->with([
+            return redirect()->route('dashboard')->with([
                 'message' => 'Loggedin successfully',
                 'type' => 'success'
             ]) ;

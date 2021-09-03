@@ -1,7 +1,7 @@
 <div class="comment_respond" id="add_comment_section">
 
     <h3 class="reply_title">Leave a Reply <small></small></h3>
-    <form class="comment__form" action="{{ route('comment.store',['slug'=>$post->slug]) }}" method="POST">
+    <form class="comment__form" action="{{ route('comments.store',['slug' => $post->slug]) }}" method="POST">
         @csrf
         <p>Your email address will not be published.Required fields are marked </p>
         <div class="input__box">

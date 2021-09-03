@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Users;
 use App\Http\Controllers\Controller;
 use App\Models\PostMedia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class PostMediaController extends Controller
 {
@@ -79,8 +80,18 @@ class PostMediaController extends Controller
      * @param  \App\Models\PostMedia  $postMedia
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PostMedia $postMedia)
+    public function destroy(PostMedia $media)
     {
-        //
+        // $media = PostMedia::whereId($media_id)->first();
+        if ($media) {
+            if (File::exists('assets/posts/'. $media->path)) {
+                unlink('assets/posts/'. $media->path);
+            }
+
+            $media->delete();
+
+            return true;
+        }
+        return false;
     }
 }

@@ -1,3 +1,10 @@
+
+<?php
+
+// dd($recent_posts->first);
+
+?>
+
 <div class="col-lg-3 col-12 md-mt-40 sm-mt-40">
     <div class="wn__sidebar">
         <!-- Start Single Widget -->
@@ -21,9 +28,9 @@
                         <div class="post-wrapper d-flex">
                             <div class="thumb">
                                 @if ($recent_post->media->count() > 0)
-                                <a href="blog-details.html"><img src=" {{ asset('assets/posts/'. $recent_post->media->path ) }} " alt="{{$recent_post->title}}"></a>
+                                <a href="{{ route('posts.show', $recent_post->slug) }}"><img src=" {{ asset('assets/posts/'. $recent_post->media->first()->path ) }} " alt="{{$recent_post->title}}"></a>
                                 @else
-                                <a href="blog-details.html"><img src=" {{ asset('assets/images/blog/sm-img/1.jpg') }} " alt="blog images"></a>
+                                <a href="{{ route('posts.show', $recent_post->slug) }}"><img src=" {{ asset('assets/images/blog/sm-img/1.jpg') }} " alt="blog images"></a>
                                 @endif
                             </div>
                             <div class="content">

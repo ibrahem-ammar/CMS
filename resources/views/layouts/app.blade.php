@@ -22,8 +22,10 @@
     <!-- Cusom css -->
     <link rel="stylesheet" href=" {{ asset('assets/css/custom.css') }} ">
 
+    @yield('style')
     <!-- Modernizer js -->
     <script src=" {{ asset('assets/js/vendor/modernizr-3.5.0.min.js') }} "></script>
+
 
 </head>
 <body>
@@ -56,5 +58,7 @@
             });
         });
     </script>
+
+    @yield('script')
 </body>
 </html>
